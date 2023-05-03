@@ -1,5 +1,5 @@
 import fastify from "fastify";
-import { validateURL } from "features/validate-url";
+import { validateURL } from "./features/validate-url";
 
 const app = fastify();
 
