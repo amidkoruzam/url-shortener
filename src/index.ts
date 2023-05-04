@@ -13,4 +13,4 @@ app.post<{ Body: { url: string } }>("/", async (req) => {
   return { url: req.url };
 });
 
-app.listen({ port: 3000 });
+app.listen({ port: 3000, host: "0.0.0.0" });
