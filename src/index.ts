@@ -13,4 +13,11 @@ app.post<{ Body: { url: string } }>("/", async (req) => {
   return { url: req.url };
 });
 
-app.listen({ port: 3000, host: "0.0.0.0" });
+app.listen({ port: 3000, host: "0.0.0.0" }, (err, address) => {
+  if (err) {
+    console.error(err);
+    process.exit(1);
+  }
+
+  console.info(`Server listening on ${address}`);
+});
