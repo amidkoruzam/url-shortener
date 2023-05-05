@@ -1,0 +1,15 @@
+name: Push to main
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  google-cloud-auth:
+    runs-on: ubuntu-latest
+    steps:
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ secrets.GOOGLE_CREDENTIALS_JSON }}'
