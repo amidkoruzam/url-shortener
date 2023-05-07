@@ -6,10 +6,10 @@ on:
 
 env:
   IMAGE_NAME: url-shortener
-  IMAGE_GOOGLE_CLOUD_TAG: ${{ env.GOOGLE_CLOUD_REGISTRY_HOSTNAME }}/${{ env.GOOGLE_CLOUD_PROJECT_ID }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+  IMAGE_GOOGLE_CLOUD_TAG: ${{ vars.GOOGLE_CLOUD_REGISTRY_HOSTNAME }}/${{ vars.GOOGLE_CLOUD_PROJECT_ID }}/url-shortener:${{ github.sha }}
 
 jobs:
-  google-cloud-auth:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: 'Checkout'
@@ -32,3 +32,11 @@ jobs:
 
       - name: 'Push docker image'
         run: docker push ${{ env.IMAGE_GOOGLE_CLOUD_TAG }}
+
+      - name: 'Deploy to Cloud Run'
+        run: | 
+          gcloud run deploy staging \
+            --image ${{ env.IMAGE_GOOGLE_CLOUD_TAG }} \
+            --platform managed \
+            --region europe-west4 \
+            --allow-unauthenticated
